@@ -5,8 +5,10 @@ import { useDispatch } from 'react-redux';
 import { fetchSearch } from '../actions/booksAction';
 
 import Pagination from '@material-ui/lab/Pagination';
-import { popup } from '../animation';
 import { motion } from 'framer-motion';
+import { BookItem } from './BookItem';
+
+import './BookList.scss';
 
 export const BooksList = () => {
   const dispatch = useDispatch();
@@ -25,6 +27,7 @@ export const BooksList = () => {
     dispatch(fetchSearch(textInput, 0));
     setTextInputPagination(textInput);
     setTextInput('');
+    // reset the page to page 1
     setCurrentPage(1);
   };
   //   Get the data back from the state
@@ -50,25 +53,18 @@ export const BooksList = () => {
         />
         <button type="submit">Search</button>
       </form>
-      <motion.div>
+      <motion.div className="card-list">
         {/* Check if there are data in the array */}
         {foundBooks.items &&
           foundBooks.items.length > 0 &&
           foundBooks.items.map((book) => (
-            <motion.div
-              variants={popup}
-              initial="hidden"
-              animate="show"
-              key={book.id}
-            >
-              <h1>{book.volumeInfo.title}</h1>
-            </motion.div>
+            <BookItem key={book.id} book={book} />
           ))}
       </motion.div>
       <Pagination
+        className="pagination"
         count={pageNumber}
         shape="rounded"
-        // value={currentPage}
         page={currentPage}
         onChange={pageNumberHandler}
       />
