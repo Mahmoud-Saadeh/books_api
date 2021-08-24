@@ -8,7 +8,7 @@ import Pagination from '@material-ui/lab/Pagination';
 import { motion } from 'framer-motion';
 import { BookItem } from './BookItem';
 
-import './BookList.scss';
+import './BooksList.scss';
 
 export const BooksList = () => {
   const dispatch = useDispatch();
@@ -46,12 +46,15 @@ export const BooksList = () => {
     <div>
       <form className="search" onSubmit={submitSearch}>
         <input
+          className="search-input"
           placeholder="Search for a book"
           value={textInput}
           onChange={inputHandler}
           type="text"
         />
-        <button type="submit">Search</button>
+        <button className="btn-search" type="submit">
+          Search
+        </button>
       </form>
       <motion.div className="card-list">
         {/* Check if there are data in the array */}
