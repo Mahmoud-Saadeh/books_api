@@ -14,9 +14,10 @@ export const BookItem = ({ book }) => {
       <h4>{book.volumeInfo.title}</h4>
       <div className="authors-date">
         <ul>
-          {book.volumeInfo.authors.map((author, index) => (
-            <li key={index}>{author}</li>
-          ))}
+          {book.volumeInfo.authors &&
+            book.volumeInfo.authors.map((author, index) => (
+              <li key={index}>{author}</li>
+            ))}
         </ul>
         <small>{book.volumeInfo.publishedDate}</small>
       </div>
