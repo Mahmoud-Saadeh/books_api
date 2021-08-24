@@ -9,6 +9,11 @@ const booksReducer = (state = initState, action) => {
         ...state,
         foundBooks: action.payload.searched,
       };
+    case 'SORT_BOOKS':
+      return {
+        ...state,
+        foundBooks: action.payload.data,
+      };
     default:
       return { ...state };
   }

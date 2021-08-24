@@ -36,11 +36,15 @@ describe('Render BookList component', () => {
     );
 
     // expect(input.get(0).value).to.equal('Hello');
-    wrapper.find('input').simulate('change', { target: { value: 'harry' } });
-    expect(wrapper.find('input').props().value).toBe('harry');
+    wrapper
+      .find('.search-input-field input')
+      .simulate('change', { target: { value: 'harry' } });
+    expect(wrapper.find('.search-input-field input').props().value).toBe(
+      'harry'
+    );
 
     wrapper.find('.search').simulate('submit');
-    expect(wrapper.find('input').props().value).toBe('');
+    expect(wrapper.find('.search-input-field input').props().value).toBe('');
 
     expect(initialState.books.foundBooks.length).toBe(0);
 
