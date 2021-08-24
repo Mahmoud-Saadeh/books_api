@@ -1,3 +1,48 @@
+.book-list {
+  margin-top: 50px;
+  .search {
+    padding: 0 5rem;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .search-input-field {
+      width: 60%;
+    }
+
+    @media (max-width: 940px) {
+      .search-input-field {
+        width: 40%;
+      }
+    }
+
+    legend {
+      margin-left: 16px;
+    }
+
+    .radio-btn {
+      margin-right: 20px;
+    }
+  }
+  @media (max-width: 720px) {
+    .search {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+
+      > * {
+        margin-top: 20px;
+      }
+
+      .search-input-field {
+        width: 100%;
+      }
+    }
+  }
+}
+
 .card-list {
   min-height: 80vh;
   display: grid;

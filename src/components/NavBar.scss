@@ -1,0 +1,57 @@
+$linksColor: #333;
+$logoColor: #f14800;
+$linksSize: 20px;
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+
+.nav-header {
+  transition: all 0.5s ease;
+  display: flex;
+  padding: 0 8rem;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 11;
+  color: $linksColor;
+  font-family: 'Lato', sans-serif;
+
+  @media (max-width: 720px) {
+    flex-direction: column;
+    align-items: center;
+  }
+  h1 {
+    cursor: pointer;
+    a {
+      text-decoration: none;
+      color: $linksColor;
+    }
+  }
+  span {
+    color: $logoColor;
+  }
+  ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    font-size: $linksSize;
+    a {
+      text-decoration: none;
+      color: $linksColor;
+      display: flex;
+      align-items: center;
+
+      > * {
+        margin: 0 10px;
+      }
+    }
+    .active {
+      a {
+        svg {
+          color: $logoColor;
+        }
+      }
+    }
+    li {
+      margin: 0 20px;
+    }
+  }
+}
