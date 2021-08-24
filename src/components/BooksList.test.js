@@ -1,9 +1,10 @@
-import Enzyme, { shallow, mount } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { Provider } from 'react-redux';
 // import configureStore from 'redux-mock-store';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import moxios from 'moxios';
 
 import { BooksList } from './BooksList';
 
@@ -13,6 +14,15 @@ const mockStore = configureMockStore(middlewares);
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('Render BookList component', () => {
+  jest.setTimeout(10000);
+
+  beforeEach(() => {
+    moxios.install();
+  });
+  afterEach(() => {
+    moxios.uninstall();
+  });
+
   const initialState = { books: { foundBooks: [] } };
   // const mockStore = configureStore();
   let store;
