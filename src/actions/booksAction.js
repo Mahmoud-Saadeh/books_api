@@ -2,7 +2,8 @@ import axios from 'axios';
 
 import { searchByBookURL } from '../api';
 
-export const fetchSearch = (book_name, startIndex) => async (dispatch) => {
+// to fetch the data from the api and send the response to the reducer
+const fetchSearch = (book_name, startIndex) => async (dispatch) => {
   const searchBooks = await axios.get(searchByBookURL(book_name, startIndex));
 
   dispatch({
@@ -13,16 +14,32 @@ export const fetchSearch = (book_name, startIndex) => async (dispatch) => {
   });
 };
 
-export const sortBooks = (orderBy, booksData) => async (dispatch) => {
-  let data;
+// to sort the data and send them to the reducer
+const sortBooks = (orderBy, booksData) => async (dispatch) => {
+  const sortedData = sortHandler(orderBy, booksData);
+
+  dispatch({
+    type: 'SORT_BOOKS',
+    payload: {
+      sortedData,
+    },
+  });
+};
+
+// helper function to sort the data
+function sortHandler(orderBy, booksData) {
   if (orderBy === 'title') {
-    data = {
+    return {
       ...booksData,
       items: booksData.items.sort((a, b) => {
-        if (a.volumeInfo.title < b.volumeInfo.title) {
+        if (
+          a.volumeInfo.title.toLowerCase() < b.volumeInfo.title.toLowerCase()
+        ) {
           return -1;
         }
-        if (a.volumeInfo.title > b.volumeInfo.title) {
+        if (
+          a.volumeInfo.title.toLowerCase() > b.volumeInfo.title.toLowerCase()
+        ) {
           return 1;
         }
         return 0;
@@ -31,24 +48,26 @@ export const sortBooks = (orderBy, booksData) => async (dispatch) => {
   }
 
   if (orderBy === 'author') {
-    data = {
+    return {
       ...booksData,
       items: booksData.items.sort((a, b) => {
         if (
-          a.volumeInfo.authors
-            ? a.volumeInfo.authors[0]
-            : a.volumeInfo.authors < b.volumeInfo.authors
-            ? b.volumeInfo.authors[0]
-            : b.volumeInfo.authors
+          (a.volumeInfo.authors
+            ? a.volumeInfo.authors[0].toLowerCase()
+            : undefined) <
+          (b.volumeInfo.authors
+            ? b.volumeInfo.authors[0].toLowerCase()
+            : undefined)
         ) {
           return -1;
         }
         if (
-          a.volumeInfo.authors
-            ? a.volumeInfo.authors[0]
-            : a.volumeInfo.authors > b.volumeInfo.authors
-            ? b.volumeInfo.authors[0]
-            : b.volumeInfo.authors
+          (a.volumeInfo.authors
+            ? a.volumeInfo.authors[0].toLowerCase()
+            : undefined) >
+          (b.volumeInfo.authors
+            ? b.volumeInfo.authors[0].toLowerCase()
+            : undefined)
         ) {
           return 1;
         }
@@ -56,10 +75,6 @@ export const sortBooks = (orderBy, booksData) => async (dispatch) => {
       }),
     };
   }
-  dispatch({
-    type: 'SORT_BOOKS',
-    payload: {
-      data,
-    },
-  });
-};
+}
+
+export { sortHandler, fetchSearch, sortBooks };

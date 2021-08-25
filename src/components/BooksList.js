@@ -19,24 +19,36 @@ import FormLabel from '@material-ui/core/FormLabel';
 import { motion } from 'framer-motion';
 import { BookItem } from './BookItem';
 
+//custom style
 import './BooksList.scss';
 
 export const BooksList = () => {
   const dispatch = useDispatch();
   // current page
   const [currentPage, setCurrentPage] = useState(1);
+
+  // hold the books data
   const [foundBooksState, setFoundBooksState] = useState();
+
+  // control the radio button
+  const [sortValue, setSortValue] = useState(null);
 
   // state to hold user input
   const [textInput, setTextInput] = useState('');
+
+  // to hold user input through when the page change
   const [textInputPagination, setTextInputPagination] = useState('');
+
+  // to change the state of the user input
   const inputHandler = (e) => {
     setTextInput(e.target.value);
   };
 
-  // useEffect(() => {
-  //   dispatch(fetchSearch('Harry Potter', 0));
-  // }, []);
+  // initialize the data with harry potter user input
+  useEffect(() => {
+    dispatch(fetchSearch('Harry Potter', 0));
+  }, [dispatch]);
+
   // function to send the request and then store the response in the state manager
   const submitSearch = (e) => {
     e.preventDefault();
@@ -45,10 +57,15 @@ export const BooksList = () => {
     setTextInput('');
     // reset the page to page 1
     setCurrentPage(1);
+
+    //reset radio buttons
+    setSortValue(null);
   };
+
   //   Get the data back from the state
   const { foundBooks } = useSelector((state) => state.books);
 
+  // to assign the search result to a state once the response come
   useEffect(() => {
     setFoundBooksState(foundBooks.items);
   }, [foundBooks]);
@@ -57,13 +74,21 @@ export const BooksList = () => {
   const pageNumber = Math.ceil((foundBooks.totalItems || 0) / maxResults);
   //   const pageNumber = 10;
 
+  // to handle the page number change
   const pageNumberHandler = (event, value) => {
-    console.log(value);
     setCurrentPage(value);
+    //reset radio buttons
+    setSortValue(null);
+
+    //scroll to the top
+    document.documentElement.scrollTop = 0;
+
     dispatch(fetchSearch(textInputPagination, (value - 1) * maxResults));
   };
 
+  // to change the state once the user click into the radio button
   const sortHandler = (e) => {
+    setSortValue(e.target.value);
     dispatch(sortBooks(e.target.value, foundBooks));
   };
   return (
@@ -88,19 +113,23 @@ export const BooksList = () => {
           <RadioGroup
             row
             aria-label="position"
-            name="position"
+            name="sort"
             defaultValue="top"
             onClick={sortHandler}
           >
             <FormControlLabel
               value="author"
-              control={<Radio color="primary" />}
+              control={
+                <Radio checked={sortValue === 'author'} color="primary" />
+              }
               label="Author"
               labelPlacement="start"
             />
             <FormControlLabel
               value="title"
-              control={<Radio color="primary" />}
+              control={
+                <Radio checked={sortValue === 'title'} color="primary" />
+              }
               label="Title"
               labelPlacement="start"
             />

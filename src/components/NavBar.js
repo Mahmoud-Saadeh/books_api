@@ -6,10 +6,12 @@ import { Link, useLocation } from 'react-router-dom';
 import './NavBar.scss';
 
 export const NavBar = () => {
+  //to get the current endpoint
   const location = useLocation();
 
   const [navColor, setNavColor] = useState();
 
+  // to change the navbar color on scroll and used useEffect to avoid infinite call for the function
   useEffect(() => {
     if (typeof window !== 'undefined') {
       window.addEventListener('scroll', () =>
@@ -18,22 +20,6 @@ export const NavBar = () => {
     }
   }, []);
 
-  // const listenScrollEvent = (e) => {
-  //   console.log(window.scrollY);
-  //   if (window.scrollY > 100) {
-  //     setNavColor({
-  //       color: '#e7e7e7',
-  //       shadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-  //     });
-  //   }
-  //   // else {
-  //   //     setNavColor({ color: 'transparent', shadow: 'transparent 0px 5px 15px' });
-  //   //   }
-  // };
-
-  // window.addEventListener('scroll', listenScrollEvent);
-
-  console.log(location.pathname);
   return (
     <nav
       className="nav-header"
