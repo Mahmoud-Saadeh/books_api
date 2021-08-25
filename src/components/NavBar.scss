@@ -20,6 +20,8 @@ $linksSize: 20px;
   }
   h1 {
     cursor: pointer;
+    font-size: 1.5em;
+    margin: 20px;
     a {
       text-decoration: none;
       color: $linksColor;
@@ -33,6 +35,7 @@ $linksSize: 20px;
     list-style: none;
     align-items: center;
     font-size: $linksSize;
+    margin: 20px;
     a {
       text-decoration: none;
       color: $linksColor;

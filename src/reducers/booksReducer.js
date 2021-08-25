@@ -12,7 +12,7 @@ const booksReducer = (state = initState, action) => {
     case 'SORT_BOOKS':
       return {
         ...state,
-        foundBooks: action.payload.data,
+        foundBooks: action.payload.sortedData,
       };
     default:
       return { ...state };
